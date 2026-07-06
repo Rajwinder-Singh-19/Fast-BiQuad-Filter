@@ -1,2 +1,2 @@
-# ButterFilter
-A basic volume control effect plug-in with IGraphics GUI
+# Fast BiQuad Filter!
+A blazingly fast, real-time audio dsp biquad filter, available as a VST3 plugin application.
