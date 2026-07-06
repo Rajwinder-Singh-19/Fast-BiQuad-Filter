@@ -5,6 +5,8 @@ A blazingly fast, real-time audio dsp biquad filter, available as a VST3 plugin 
 
 # Fast BiQuad Filter! : Live audio demo.
 ###
-[![Fast BiQuad Filter! VST Demo](https://img.youtube.com/vi/XQ46ajzYTAQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=XQ46ajzYTAQ)
+https://github.com/user-attachments/assets/48d36102-6627-4a8b-99a1-67cc4aa5f6c4
+
+
 
 
