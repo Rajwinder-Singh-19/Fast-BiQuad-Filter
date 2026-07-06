@@ -13,7 +13,8 @@ Designed with a focus on:
 - Separation between the GUI thread and the real-time audio processing thread
 
 ###
-<img width="1790" height="896" alt="Fast BiQuad Filter" src="https://github.com/user-attachments/assets/3639ae99-466e-4269-b19a-b8a0d3ff6b50" />
+<img width="1776" height="884" alt="Screenshot (59)" src="https://github.com/user-attachments/assets/9b4b14aa-4f2b-4aa1-af59-88c62453835e" />
+
 
 # Technical Highlights
 
