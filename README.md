@@ -7,11 +7,20 @@ Built using:
 - Steinberg VST3 SDK
 
 Designed with a focus on:
-- low-latency DSP
-- numerical stability
-- real-time safe audio processing
-- supporting audio domain sampling frequencies
+- Low-latency DSP
+- Numerical stability
+- Real-time safe audio processing
 - DSP and GUI on separate CPU threads.
+
+# Technical Highlights
+
+- Real-time VST3 audio plugin written in Modern C++
+- Sample-by-sample biquad DSP engine
+- Low-pass, high-pass, and band-pass filter implementations
+- Real-time safe audio callback (no allocations in the audio thread)
+- DSP engine and GUI running on separate threads
+- Runtime coefficient recomputation from cutoff frequency and Q
+- Supports standard audio sample rates (44.1 kHz, 48 kHz, 96 kHz, etc.)
 
 This project explores the implementation of real-time digital signal processing by developing a VST3 audio plugin from scratch. The DSP engine performs sample-by-sample biquad filtering while the GUI provides live parameter control without interrupting audio processing. The project emphasizes clean separation between the DSP engine and the user interface on separate CPU threads, deterministic real-time execution, and modern C++ design.
   
@@ -21,6 +30,10 @@ This project explores the implementation of real-time digital signal processing 
 # Fast BiQuad Filter! : Live audio demo.
 ###
 https://github.com/user-attachments/assets/48d36102-6627-4a8b-99a1-67cc4aa5f6c4
+
+# Archtecture
+<img width="1024" height="1536" alt="Architecture" src="https://github.com/user-attachments/assets/f93bf6aa-ebbe-4308-b6b3-588a3dea8cef" />
+
 
 # BiQuad DSP Engine
 ## Low-Latency DSP Callback
@@ -36,6 +49,20 @@ void ButterFilter::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 }
 #endif
 ```
+## Biquad Difference Equation
+```cpp
+double BiQuad::processSample(double sample)
+{
+  double y = mB0 * sample + mB1 * mX1 + mB2 * mX2 - mA1 * mY1 - mA2 * mY2;
+  mX2 = mX1;
+  mX1 = sample;
+  mY2 = mY1;
+  mY1 = y;
+
+  return y;
+}
+```
+
 ## Buffer Setup
 ```cpp
 void BiQuad::setupFilterBuffer(FilterType filterType, double cutoffFrequencyHz, double QFactor, double sampleRateHz)
@@ -61,8 +88,9 @@ void BiQuad::setupFilterBuffer(FilterType filterType, double cutoffFrequencyHz, 
   }
 }
 ```
-## Variants
-### Lowpass Filter
+<details>
+<summary> Coefficient Calculations </summary>
+  
 ```cpp
 void BiQuad::mSetupLowPass(double alpha, double beta)
 {
@@ -80,7 +108,7 @@ void BiQuad::mSetupLowPass(double alpha, double beta)
   mA2 = (1 - alpha) / (1 + alpha);
 }
 ```
-### Highpass Filter
+
 ```cpp
 void BiQuad::mSetupHighPass(double alpha, double beta)
 {
@@ -98,7 +126,7 @@ void BiQuad::mSetupHighPass(double alpha, double beta)
   mA2 = (1 - alpha) / (1 + alpha);
 }
 ```
-### Bandpass Filter
+
 ```cpp
 void BiQuad::mSetupBandPass(double alpha, double beta)
 {
@@ -116,20 +144,8 @@ void BiQuad::mSetupBandPass(double alpha, double beta)
   mA2 = (1 - alpha) / (1 + alpha);
 }
 ```
+</details> 
 
-## Biquad Difference Equation
-```cpp
-double BiQuad::processSample(double sample)
-{
-  double y = mB0 * sample + mB1 * mX1 + mB2 * mX2 - mA1 * mY1 - mA2 * mY2;
-  mX2 = mX1;
-  mX1 = sample;
-  mY2 = mY1;
-  mY1 = y;
-
-  return y;
-}
-```
 
 
 
