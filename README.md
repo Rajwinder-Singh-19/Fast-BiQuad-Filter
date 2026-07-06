@@ -12,6 +12,9 @@ Designed with a focus on:
 - Real-time safe audio processing
 - Separation between the GUI thread and the real-time audio processing thread
 
+###
+<img width="1790" height="896" alt="Fast BiQuad Filter" src="https://github.com/user-attachments/assets/3639ae99-466e-4269-b19a-b8a0d3ff6b50" />
+
 # Technical Highlights
 
 This project explores the implementation of real-time digital signal processing by developing a VST3 audio plugin from scratch. The DSP engine performs sample-by-sample biquad filtering while the GUI provides live parameter control without interrupting audio processing. The project emphasizes clean separation between the DSP engine and the user interface on separate threads, deterministic real-time execution, and modern C++ design.
@@ -23,9 +26,6 @@ This project explores the implementation of real-time digital signal processing 
 - DSP engine and GUI running on separate threads
 - Runtime coefficient recomputation from cutoff frequency and Q
 - Supports standard audio sample rates (44.1 kHz, 48 kHz, 96 kHz, etc.)
-  
-###
-<img width="1790" height="896" alt="Fast BiQuad Filter" src="https://github.com/user-attachments/assets/3639ae99-466e-4269-b19a-b8a0d3ff6b50" />
 
 # Fast BiQuad Filter! : Live audio demo.
 ###
