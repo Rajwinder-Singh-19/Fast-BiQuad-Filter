@@ -10,9 +10,11 @@ Designed with a focus on:
 - Low-latency DSP
 - Numerical stability
 - Real-time safe audio processing
-- DSP and GUI on separate CPU threads.
+- Separation between the GUI thread and the real-time audio processing thread
 
 # Technical Highlights
+
+This project explores the implementation of real-time digital signal processing by developing a VST3 audio plugin from scratch. The DSP engine performs sample-by-sample biquad filtering while the GUI provides live parameter control without interrupting audio processing. The project emphasizes clean separation between the DSP engine and the user interface on separate threads, deterministic real-time execution, and modern C++ design.
 
 - Real-time VST3 audio plugin written in Modern C++
 - Sample-by-sample biquad DSP engine
@@ -21,8 +23,6 @@ Designed with a focus on:
 - DSP engine and GUI running on separate threads
 - Runtime coefficient recomputation from cutoff frequency and Q
 - Supports standard audio sample rates (44.1 kHz, 48 kHz, 96 kHz, etc.)
-
-This project explores the implementation of real-time digital signal processing by developing a VST3 audio plugin from scratch. The DSP engine performs sample-by-sample biquad filtering while the GUI provides live parameter control without interrupting audio processing. The project emphasizes clean separation between the DSP engine and the user interface on separate CPU threads, deterministic real-time execution, and modern C++ design.
   
 ###
 <img width="1790" height="896" alt="Fast BiQuad Filter" src="https://github.com/user-attachments/assets/3639ae99-466e-4269-b19a-b8a0d3ff6b50" />
@@ -39,6 +39,9 @@ https://github.com/user-attachments/assets/48d36102-6627-4a8b-99a1-67cc4aa5f6c4
 
 # BiQuad DSP Engine
 ## Low-Latency DSP Callback
+
+The audio callback performs deterministic sample-by-sample processing without dynamic memory allocation or blocking operations, making it suitable for real-time execution.
+
 ```cpp
 #if IPLUG_DSP
 void ButterFilter::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
@@ -65,7 +68,10 @@ double BiQuad::processSample(double sample)
 }
 ```
 
-## Buffer Setup
+## Runtime Coefficient Generation
+
+Filter coefficients are recomputed whenever the cutoff frequency, Q factor, filter type, or sample rate changes, allowing seamless real-time parameter updates while keeping the processing loop lightweight.
+
 ```cpp
 void BiQuad::setupFilterBuffer(FilterType filterType, double cutoffFrequencyHz, double QFactor, double sampleRateHz)
 {
@@ -147,6 +153,14 @@ void BiQuad::mSetupBandPass(double alpha, double beta)
 }
 ```
 </details> 
+
+## Future Work
+
+- Parametric EQ
+- Notch and shelving filters
+- SIMD acceleration
+- Frequency response visualisation
+- Oversampling
 
 
 
