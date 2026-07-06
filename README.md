@@ -2,7 +2,7 @@
 A modern C++ VST3 plugin implementing a configurable real-time biquad filter with a lightweight GUI.
 
 Built using:
-- C++23
+- Modern C++
 - iPlug2
 - Steinberg VST3 SDK
 
