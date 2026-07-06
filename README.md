@@ -30,7 +30,8 @@ This project explores the implementation of real-time digital signal processing 
 
 # Fast BiQuad Filter! : Live audio demo.
 ###
-https://github.com/user-attachments/assets/48d36102-6627-4a8b-99a1-67cc4aa5f6c4
+
+[Fast BiQuad Demo](https://github.com/user-attachments/assets/cdaf17ed-030a-4228-be73-329b47efd221)
 
 (Click on the crossed-out speaker icon to hear the filter in action)
 
